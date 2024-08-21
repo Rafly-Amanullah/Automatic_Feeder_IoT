@@ -49,10 +49,10 @@ BLYNK_WRITE(V4)
 {
   int pinValue = param.asInt(); 
   if (pinValue == 1){
-    Serial.println("Device on");
+    digitalWrite(relaypin, HIGH);
   }
   else{
-    Serial.println("Device off");
+    digitalWrite(relaypin,LOW);
   }
 }
 int16_t readDO(uint32_t voltage_mv, uint8_t temperature_c)
@@ -98,7 +98,7 @@ void ultrasonic()
   }
 }
 int mapDistanceToPercentage(int dist) {
-    int mappedPercentage = map(dist, minDistance, maxDistance, 0, 100);
+    int mappedPercentage = map(dist, minDistance, maxDistance, 100, 0);
     if (mappedPercentage < 0) {
         mappedPercentage = 0;
     } else if (mappedPercentage > 100) {
@@ -108,6 +108,7 @@ int mapDistanceToPercentage(int dist) {
 }
 void setup()
 {
+  pinMode(relaypin, OUTPUT);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   Serial.begin(115200);
